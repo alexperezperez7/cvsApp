@@ -1,7 +1,7 @@
 @extends('template.base')
 
 @section('content')
-<h2>Lista de Alumnos</h2>
+<h2>Lista de CVs</h2>
 
 <!-- Modal de confirmación -->
 <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
@@ -12,11 +12,11 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        ¿Seguro que quieres eliminar al alumno <span id="modal-student-name"></span>?
+        ¿Seguro que quieres eliminar el CV del alumno <span id="modal-student-name"></span>?
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-        <button form="form-delete" type="submit" class="btn btn-danger">Eliminar alumno</button>
+        <button form="form-delete" type="submit" class="btn btn-danger">Eliminar CV</button>
       </div>
     </div>
   </div>
@@ -55,7 +55,7 @@
     </tbody>
     <tfoot>
         <tr>
-            <th colspan="5">Total de alumnos:</th>
+            <th colspan="5">Total de CVs:</th>
             <th>{{ count($alumnos) }}</th>
         </tr>
     </tfoot>
@@ -66,7 +66,7 @@
     @method('delete')
 </form>
 
-<a href="{{ route('alumno.create') }}" class="btn btn-primary">Añadir Nuevo Alumno</a>
+<a href="{{ route('alumno.create') }}" class="btn btn-primary">Añadir Nuevo CV</a>
 @endsection
 
 @section('scripts')

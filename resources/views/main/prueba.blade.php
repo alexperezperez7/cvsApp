@@ -25,8 +25,8 @@
     </div>
     <div class="card-body">
         <div class="d-grid gap-2">
-            <a href="{{ route('alumno.index') }}" class="btn btn-outline-primary">Lista de Alumnos</a>
-            <a href="{{ route('alumno.create') }}" class="btn btn-outline-success">Crear Alumno</a>
+            <a href="{{ route('alumno.index') }}" class="btn btn-outline-primary">Lista de CVs</a>
+            <a href="{{ route('alumno.create') }}" class="btn btn-outline-success">Crear CV</a>
             <a href="{{ route('main.index') }}" class="btn btn-outline-secondary">Página Principal</a>
         </div>
     </div>

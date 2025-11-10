@@ -12,7 +12,7 @@
   <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <div class="container">
-        <a class="navbar-brand" href="{{ route('main.index') }}">Gestor de CVs</a>
+        <a class="navbar-brand" href="{{ route('main.index') }}">CVs App</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
           aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -23,10 +23,10 @@
               <a class="nav-link active" aria-current="page" href="{{ route('main.index') }}">Inicio</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{{ route('alumno.create') }}">Añadir Alumno</a>
+              <a class="nav-link" href="{{ route('alumno.create') }}">Añadir nuevo CV</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{{ route('alumno.index') }}">Lista de Alumnos</a>
+              <a class="nav-link" href="{{ route('alumno.index') }}">Lista de CVs</a>
             </li>
           </ul>
         </div>

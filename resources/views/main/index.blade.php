@@ -48,14 +48,14 @@
         <div class="alert alert-info text-center">
             <h4>No hay alumnos registrados</h4>
             <p>Comienza añadiendo el primer alumno y su CV.</p>
-            <a href="{{ route('alumno.create') }}" class="btn btn-primary">Añadir Primer Alumno</a>
+            <a href="{{ route('alumno.create') }}" class="btn btn-primary">Añadir Primer CV</a>
         </div>
     </div>
     @endif
 </div>
 
 <div class="mt-4">
-    <a href="{{ route('alumno.create') }}" class="btn btn-success">Añadir Nuevo Alumno</a>
+    <a href="{{ route('alumno.create') }}" class="btn btn-success">Añadir Nuevo CV</a>
     <a href="{{ route('alumno.index') }}" class="btn btn-outline-secondary">Ver Lista Completa</a>
 </div>
 @endsection
