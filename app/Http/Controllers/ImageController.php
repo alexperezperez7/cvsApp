@@ -3,50 +3,53 @@
 namespace App\Http\Controllers;
 
 use App\Models\Alumno;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 
 class ImageController extends Controller
 {
-    public function view($id)
-    {
+        public function view($id) {
         $alumno = Alumno::find($id);
         
-        // Si no existe el alumno, mostrar imagen "no photo"
-        if($alumno == null) {
+        if($alumno == null || $alumno->fotografia == null) {
             return $this->getNoPhotoImage();
         }
         
-        // Si el alumno no tiene foto, mostrar imagen "no photo"
-        if($alumno->fotografia == null) {
-            return $this->getNoPhotoImage();
+        // BUSCAR IMAGEN EN RUTA DIRECTA
+        $imagePath = public_path($alumno->fotografia);
+        
+        if(file_exists($imagePath)) {
+            \Log::info("Imagen encontrada en: " . $imagePath);
+            return response()->file($imagePath);
+        } else {
+            \Log::error("Imagen NO encontrada en: " . $imagePath);
+            \Log::info("Buscando en: " . $alumno->fotografia);
         }
         
-        // Construir ruta completa de la imagen
-        $imagePath = storage_path('app/public/' . $alumno->fotografia);
-        
-        // Verificar si el archivo existe
-        if(!file_exists($imagePath)) {
-            return $this->getNoPhotoImage();
-        }
-        
-        // Devolver la imagen
-        return response()->file($imagePath);
+        return $this->getNoPhotoImage();
     }
     
     private function getNoPhotoImage()
     {
+        // Intentar con nophoto.jpg primero
         $noPhotoImage = public_path('assets/img/nophoto.jpg');
         if(file_exists($noPhotoImage)) {
             return response()->file($noPhotoImage);
         }
         
-        // Si no existe nophoto.jpg, intentar con noimage.png
+        // Intentar con noimage.png
         $defaultImage = public_path('assets/img/noimage.png');
         if(file_exists($defaultImage)) {
             return response()->file($defaultImage);
         }
         
+        // Intentar con noalumno.png
+        $defaultImage2 = public_path('assets/img/noalumno.png');
+        if(file_exists($defaultImage2)) {
+            return response()->file($defaultImage2);
+        }
+        
         // Si no existe ninguna, devolver 404
-        abort(404);
+        abort(404, 'Imagen no encontrada');
     }
 }

@@ -8,20 +8,13 @@
     <div class="card-body">
         <div class="row">
             <div class="col-md-4 text-center">
-                <img src="{{ route('image.view', $alumno->id) }}?v={{ time() }}" 
-                     class="img-fluid rounded mb-3" 
-                     style="max-height: 300px; object-fit: cover;"
-                     alt="Foto de {{ $alumno->getNombreCompleto() }}"
-                     onerror="this.src='{{ url('assets/img/noimage.png') }}'">
+                <img src="{{ $alumno->foto_url }}" 
+                    class="img-fluid rounded mb-3" 
+                    style="max-height: 300px; object-fit: cover;"
+                    alt="Foto de {{ $alumno->getNombreCompleto() }}">
                 <h4>{{ $alumno->getNombreCompleto() }}</h4>
                 <p class="text-muted">{{ $alumno->correo }}</p>
                 <p class="text-muted">{{ $alumno->telefono }}</p>
-                
-                @if(!$alumno->fotografia)
-                <div class="alert alert-info mt-2">
-                    <small><i class="fas fa-info-circle"></i> Sin fotografía</small>
-                </div>
-                @endif
             </div>
             <div class="col-md-8">
                 <div class="mb-4">

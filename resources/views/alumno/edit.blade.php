@@ -57,7 +57,7 @@
         </div>
         <div>
             <label class="form-label">Fotografía actual:</label><br>
-            <img src="{{ route('image.view', $alumno->id) }}?v={{ time() }}" width="140px" class="img-thumbnail" alt="Foto actual">
+            <img src="{{ $alumno->foto_url }}" width="140px" class="img-thumbnail" alt="Foto actual">
         </div>
         @else
         <div class="alert alert-info py-2">

@@ -31,6 +31,14 @@ class Alumno extends Model {
         return $url;
     }
 
+    // En App\Models\Alumno.php
+public function getFotoUrlAttribute() {
+        if ($this->fotografia && file_exists(public_path($this->fotografia))) {
+            return asset($this->fotografia);
+        }
+        return asset('assets/img/noimage.png'); // o noalumno.png, nophoto.jpg
+    }
+
     public function getEdad() {
         return $this->fecha_nacimiento->age;
     }

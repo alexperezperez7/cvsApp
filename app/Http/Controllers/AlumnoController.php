@@ -36,21 +36,25 @@ class AlumnoController extends Controller {
         ]);
         
         $result = false;
-        $alumno = new Alumno($request->all());
+        
         try {
+            // Crear alumno sin imagen primero
+            $alumno = new Alumno($request->all());
             $result = $alumno->save();
-            $path = $this->upload($request, $alumno->id);
-            if ($path != null) {
-                $alumno->fotografia = $path;
-                $result = $alumno->save();
+            
+            // Si se guardó, subir imagen
+            if ($result) {
+                $path = $this->upload($request, $alumno->id);
+                if ($path != null) {
+                    $alumno->fotografia = $path;
+                    $alumno->save();
+                }
             }
+            
             $message = 'El alumno ha sido creado exitosamente.';
-        } catch(UniqueConstraintViolationException $e) {
-            $message = 'Error: Ya existe un alumno con el mismo correo electrónico.';
-        } catch(QueryException $e) {
-            $message = 'Error: Alguno de los campos requeridos está vacío.';
+            
         } catch(\Exception $e) {
-            $message = 'Se ha producido un error, en caso de que persista, consulte al administrador.';
+            $message = 'Error: ' . $e->getMessage();
         }
         
         if($result) {
@@ -59,15 +63,32 @@ class AlumnoController extends Controller {
             return back()->withInput()->withErrors(['general' => $message]);
         }
     }
-
     private function upload(Request $request, $id) {
-        $path = null;
         if($request->hasFile('fotografia') && $request->file('fotografia')->isValid()) {
-            $image = $request->file('fotografia');
-            $fileName = $id . '_' . time() . '.' . $image->getClientOriginalExtension();
-            $path = $image->storeAs('images', $fileName, 'public');
+            try {
+                $image = $request->file('fotografia');
+                
+                // ✅ Crear carpeta si no existe
+                $carpeta = public_path('images/alumnos');
+                if (!file_exists($carpeta)) {
+                    mkdir($carpeta, 0755, true);
+                }
+                
+                // ✅ Generar nombre único
+                $fileName = $id . '_' . time() . '.' . $image->getClientOriginalExtension();
+                
+                // ✅ Mover la imagen
+                $image->move($carpeta, $fileName);
+                
+                // ✅ Ruta para guardar en BD
+                return 'images/alumnos/' . $fileName;
+                
+            } catch (\Exception $e) {
+                \Log::error("Error subiendo imagen: " . $e->getMessage());
+                return null;
+            }
         }
-        return $path;
+        return null;
     }
 
     public function show(Alumno $alumno): View {
